@@ -73,7 +73,7 @@ class Game {
 
   findSpotForCol(x) {
     for (let y = this.height - 1; y >= 0; y--) {
-      if (!board[y][x]) {
+      if (!this.board[y][x]) {
         return y;
       }
     }
@@ -88,7 +88,7 @@ class Game {
     piece.classList.add(`p${this.currPlayer}`);
     piece.style.top = -50 * (y + 2);
 
-    const spot = document.getElementById(`$c-${y}-${x}`);
+    const spot = document.getElementById(`c-${y}-${x}`);
     spot.append(piece);
   }
 
@@ -101,8 +101,10 @@ class Game {
   /** handleClick: handle click of column top to play piece */
 
   handleClick(evt) {
+    console.log('click working!');
     // get x from ID of clicked cell
     const x = +evt.target.id;
+    // const x = +(evt.target.id.slice(-1));
 
     // get next spot in column (if none, ignore click)
     const y = this.findSpotForCol(x);
@@ -115,7 +117,7 @@ class Game {
     this.placeInTable(y, x);
 
     // check for win
-    if (checkForWin()) {
+    if (this.checkForWin()) {
       return this.endGame(`Player ${this.currPlayer} won!`);
     }
 
